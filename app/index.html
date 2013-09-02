@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/transitions.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/util.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/cross_browser.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style/headers.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/icons/styles/action_icons.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style_unstable/drawer.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style_unstable/lists.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style_unstable/progress_activity.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style/buttons.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style/input_areas.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style/status.css">
+        <link rel="stylesheet" type="text/css" href="styles/shared/style/switches.css">
+        <!-- endbuild -->
+  </head>
+  <body ng-app="firereaderApp">
+
+    <section id="outer" data-position="current">
+        <section id="index" data-type="sidebar" ng-controller="IndexCtrl" ng-init="init()">
+            <header>
+                <menu type="toolbar">
+                    <a class="action-icon email-sync" ng-tap="refresh()" hm-hold="whatIsThisIndex('refresh')"></a>
+                    <a href="#?settings" class="action-icon settings" hm-hold="whatIsThisIndex('settings')"></a>
+                    <a href="#?dontload">OK</a>
+                </menu>
+                <h1>{{ 'MENU' | translate }}</h1>
+            </header>
+            <nav>
+                <h2>{{ 'SUBSCRIPTIONS' | translate }}</h2>
+                <ul>
+                    <li><a href="#">{{ 'ALL_ITEMS' | translate }} ({{unreadAll}})</a></li>
+                    <li ng-repeat="subscription in subscriptions"><a ng-tap="goToSubscription(subscription)">{{subscription.title}} ({{subscription.unreadcount}})</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section id="drawer" role="region" ng-controller="MainCtrl">
+            <header class="fixed">
+                <a href="#drawer" ng-hide="reading"><span class="icon icon-menu">show sidebar</span></a>
+                <a ng-show="reading"><span class="icon icon-back" ng-click="goBack()">back</span></a>
+                <menu type="toolbar">
+                    <span ng-show="!reading && !isOnSettingsPage">
+                        <span ng-hide="unread">
+                            <a><span class="icon icon-read" ng-tap="setUnread(true)" hm-hold="whatIsThisMain('unread')">read</span></a>
+                        </span>
+                        <span ng-show="unread">
+                            <a><span class="icon icon-unread" ng-tap="setUnread(false)" hm-hold="whatIsThisMain('read')">unread</span></a>
+                        </span>
+                    </span>
+                </menu>
+                <h1>FireReader</h1>
+            </header>
+            <article class="content scrollable header" ng-view=""  hm-swipe-left="pageLeft()" hm-swipe-right="pageRight()" infinite-scroll="scrollCallback($event, isEndEvent)">
+            </article>
+        </section> <!-- end drawer -->
+    </section> <!-- end index -->
+
+    <section class="hidden" role="status">
+    </section>
+
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-gestures/gestures.min.js"></script>
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/status.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-interpolation-default/angular-translate-interpolation-default.js"></script>
+    <!-- endbuild -->
+
+        <!-- build:js scripts/modules.js -->
+        <script src="scripts/controllers/settings.js"></script>
+        <script src="scripts/controllers/index.js"></script>
+        <script src="scripts/controllers/reader.js"></script>
+        <script src="scripts/services/Store.js"></script>
+        <script src="scripts/directives/focus.js"></script>
+        <script src="scripts/directives/infiniteScroll.js"></script>
+        <script src="scripts/filters/subscriptionname.js"></script>
+        <script src="scripts/directives/ngTap.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

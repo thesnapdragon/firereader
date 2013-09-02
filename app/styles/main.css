@@ -1,0 +1,149 @@
+@font-face {
+    font-family: 'FeuraSans-Medium';
+    src: url('FeuraSans-Medium.eot'); /* IE9 Compat Modes*/
+    src: url('FeuraSans-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('FeuraSans-Medium.woff') format('woff'), /* Modern Browsers */
+         url('FeuraSans-Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('FeuraSans-Medium.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    font: normal 10px "FeuraSans-Medium", sans-serif;
+}
+
+#outer {
+    height: 100%;
+}
+
+section[role="region"] > header:first-child .icon.icon-unread {
+  background-image: url(../images/unread.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-read {
+  background-image: url(../images/read.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-listview {
+  background-image: url(../images/listview.png);
+}
+
+section[role="region"] > header:first-child .icon.icon-fullview {
+  background-image: url(../images/fullview.png);
+}
+
+/* Main */
+
+#loadMoreButton {
+    width: 20rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
+
+#spinner {
+    margin-left: 0.7rem;
+}
+
+.feeditem {
+    font-size: 1.8rem;
+    padding: 1rem 0 0;
+    border: medium none;
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    list-style: none outside none;
+    cursor: pointer;
+}
+
+.feeditem:active {
+    background: #D0F7FF;
+}
+
+.feeditem a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.subscriptionname {
+    width: auto;
+    margin-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.unreadFeed {
+    font-weight: bold;
+}
+
+/* Settings */
+
+#logo {
+    width: 130%;
+    background-size: 60% 20%;
+    background-repeat: no-repeat;
+    background-image: url(../images/logo_horizontal_large.png);
+    padding-top: 20rem;
+    margin-top: 1rem;
+    margin-bottom: -15rem;
+}
+
+#settings {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#settings input[type="submit"] {
+    display: none;
+}
+
+#settings input[type="text"] {
+    padding-right: 3rem !important;
+}
+
+#settings button[type="submit"] {
+    margin-top: 10px !important;
+    cursor: pointer !important;
+}
+
+#settings .danger {
+    margin-left: 10px !important;
+    cursor: pointer !important;
+}
+
+#settings h1 {
+    margin: 1rem;
+}
+
+/* Fixes */
+
+#index h1 {
+    margin-left: 1rem !important;
+}
+
+section[role="region"] > header:first-child .icon.icon-back {
+    margin-left: 1.8rem !important;
+}
+
+button {
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+.action-icon {
+    padding-top: 10px !important;
+    padding-left: 0px !important;
+    margin-right: 5px !important;
+    cursor: pointer !important;
+}
+
+section[role="region"] {
+    margin-bottom: 1.5rem;
+    position: relative;
+}

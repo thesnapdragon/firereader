@@ -1,0 +1,60 @@
+<div id="logo"></div>
+
+<div id="settings">
+
+    <h1>{{ 'AUTHENTICATION' | translate }}</h1>
+
+    <div class="login" ng-init="init()" ng-hide="authenticated">
+        <form>
+            <table>
+            <tr>
+                <td>{{ 'EMAIL' | translate }}:</td>
+                <td>
+                    <p>
+                        <input type="email" placeholder="email" required="" ng-model="email" focus>
+                        <button type="reset" ng-tap="clearemail()">Clear</button>
+                    </p>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ 'PASSWORD' | translate }}:</td>
+                <td>
+                    <p>
+                        <input type="password" placeholder="password" required="" ng-model="password">
+                        <button type="reset" ng-tap="clearpassword()">Clear</button>
+                    </p>
+                </td>
+                <td><button type="submit" ng-tap="authenticate()">{{ 'LOGIN' | translate }}</button></td>
+            </tr>
+            </table>
+            <input type="submit" />
+        </form>
+    </div>
+
+    <div class="logout" ng-show="authenticated">
+        <table>
+            <tr>
+                <td><h2>{{ 'LOGIN_SUCCESS' | translate }}</h2></td>
+                <td><button class="danger" ng-tap="logout()">{{ 'LOGOUT' | translate }}</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>{{ 'SETTINGS' | translate}}</h1>
+
+    <div>
+        <table>
+            <tr>
+                <td>{{ 'SHOW_ONLY_UNREAD' | translate }}</td>
+                <td>
+                    <label class="pack-switch">
+                      <input type="checkbox" ng-model="settings.unreadSetting">
+                      <span></span>
+                    </label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
