@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Store', '$rootScope', '$location', '$translate', function ($scope, $http, Store, $rootScope, $location, $translate) {
+angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Store', '$rootScope', '$location', '$translate', '$timeout', function ($scope, $http, Store, $rootScope, $location, $translate, $timeout) {
 
     $scope.init = function() {
         var language = window.navigator.userLanguage || window.navigator.language;
@@ -53,7 +53,7 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
             }
         }
 
-        $scope.getUnreadCount();
+        $timeout($scope.getUnreadCount, 1000);
     };
 
     $rootScope.$on("subscriptions.queryresult", function(event, value) {

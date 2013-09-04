@@ -4,14 +4,14 @@
 
 FireReader is a simple RSS reader, powered by The Old Reader
 
-*Features:*
+**Features:**
 
 * Marking feeds read automatically as you scroll
 * Fully compatible with Google Reader API
 
 Actually the app can use any RSS reader, that provides the good old Google Reader API. At this time only tested with The Old Reader.
 
-Available: *Coming soon*
+Available: Check on [Firefox Marketplace](https://marketplace.firefox.com/app/firereader/)
 
 ## Usage
 

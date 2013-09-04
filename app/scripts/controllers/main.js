@@ -5,7 +5,7 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
     $scope.location = $location;
 
     $scope.initMain = function() {
-        $rootScope.getFeeds();
+        $timeout($rootScope.getFeeds, 1000);
         $rootScope.dontLoad = false;
 
         if ($rootScope.feedsRead == undefined) {
@@ -18,7 +18,7 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
     }, true);
 
     $rootScope.$watch('settings.unreadSetting', function() {
-        if ($rootScope.settings == undefined) return;
+        if ($rootScope.settings == undefined || $rootScope.feeds == undefined) return;
         $rootScope.continuation = null;
         $rootScope.feeds = [];
         $rootScope.feedsLoaded = 0;
@@ -76,9 +76,6 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
                 $scope.subscriptionid = ($location.search()).subscriptionid;
                 var getfeedparams = {"authtoken": authtoken, "subscriptionid": subscriptionId, "unread": $rootScope.settings.unreadSetting, "c": $rootScope.continuation, "n": 10};
                 var url = "http://thesnapdragon.herokuapp.com/feed?callback=JSON_CALLBACK&" + $.param(getfeedparams);
-                if ($rootScope.feedsDownloaderQueue == undefined) {
-                    $rootScope.feedsDownloaderQueue = [];
-                }
                 $http.jsonp(url).
                     success(function(data) {
                             if (data.items != undefined) {
