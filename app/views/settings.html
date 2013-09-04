@@ -4,7 +4,7 @@
 
     <h1>{{ 'AUTHENTICATION' | translate }}</h1>
 
-    <div class="login" ng-init="init()" ng-hide="authenticated">
+    <div class="login" ng-init="init()" ng-hide="settings.authenticated">
         <form>
             <table>
             <tr>
@@ -32,7 +32,7 @@
         </form>
     </div>
 
-    <div class="logout" ng-show="authenticated">
+    <div class="logout" ng-show="settings.authenticated">
         <table>
             <tr>
                 <td><h2>{{ 'LOGIN_SUCCESS' | translate }}</h2></td>

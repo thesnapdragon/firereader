@@ -9,7 +9,6 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css({.tmp,app}) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
@@ -33,32 +32,32 @@
         <section id="index" data-type="sidebar" ng-controller="IndexCtrl" ng-init="init()">
             <header>
                 <menu type="toolbar">
-                    <a class="action-icon email-sync" ng-tap="refresh()" hm-hold="whatIsThisIndex('refresh')"></a>
-                    <a href="#?settings" class="action-icon settings" hm-hold="whatIsThisIndex('settings')"></a>
-                    <a href="#?dontload">OK</a>
+                    <a class="action-icon email-sync" ng-click="getUnreadCount()" hm-hold="whatIsThisIndex('refresh')"></a>
+                    <a href="#" class="action-icon settings" ng-tap="goToPage('settings')" hm-hold="whatIsThisIndex('settings')"></a>
+                    <a href="#" ng-click="disableLoading()">OK</a>
                 </menu>
                 <h1>{{ 'MENU' | translate }}</h1>
             </header>
             <nav>
                 <h2>{{ 'SUBSCRIPTIONS' | translate }}</h2>
                 <ul>
-                    <li><a href="#">{{ 'ALL_ITEMS' | translate }} ({{unreadAll}})</a></li>
-                    <li ng-repeat="subscription in subscriptions"><a ng-tap="goToSubscription(subscription)">{{subscription.title}} ({{subscription.unreadcount}})</a></li>
+                    <li><a href="#" ng-tap="goToPage('main', '')">{{ 'ALL_ITEMS' | translate }} ({{allUnreadCount}})</a></li>
+                    <li ng-repeat="subscription in subscriptions"><a href="#" ng-click="goToPage('main', subscription.id)">{{subscription.title}} ({{subscription.unreadCount}})</a></li>
                 </ul>
             </nav>
         </section>
 
-        <section id="drawer" role="region" ng-controller="MainCtrl">
+        <section id="drawer" role="region" ng-controller="MainCtrl" ng-init="initMain()">
             <header class="fixed">
-                <a href="#drawer" ng-hide="reading"><span class="icon icon-menu">show sidebar</span></a>
-                <a ng-show="reading"><span class="icon icon-back" ng-click="goBack()">back</span></a>
+                <a href="#drawer" ng-click="disableLoading()" ng-hide="currentPage == 'reader'"><span class="icon icon-menu">show sidebar</span></a>
+                <a ng-show="currentPage == 'reader'"><span class="icon icon-back" ng-click="goToPage('previous', '')">back</span></a>
                 <menu type="toolbar">
-                    <span ng-show="!reading && !isOnSettingsPage">
-                        <span ng-hide="unread">
-                            <a><span class="icon icon-read" ng-tap="setUnread(true)" hm-hold="whatIsThisMain('unread')">read</span></a>
+                    <span ng-hide="currentPage == 'settings'">
+                        <span ng-hide="settings.unreadSetting">
+                            <a><span class="icon icon-read" ng-click="settings.unreadSetting = !settings.unreadSetting" hm-hold="whatIsThisMain('unread')">read</span></a>
                         </span>
-                        <span ng-show="unread">
-                            <a><span class="icon icon-unread" ng-tap="setUnread(false)" hm-hold="whatIsThisMain('read')">unread</span></a>
+                        <span ng-show="settings.unreadSetting">
+                            <a><span class="icon icon-unread" ng-click="settings.unreadSetting = !settings.unreadSetting" hm-hold="whatIsThisMain('read')">unread</span></a>
                         </span>
                     </span>
                 </menu>
@@ -83,25 +82,26 @@
 
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-gestures/gestures.min.js"></script>
+
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/status.js"></script>
     <script src="scripts/controllers/main.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="bower_components/angular-translate-interpolation-default/angular-translate-interpolation-default.js"></script>
+    <script src="scripts/status.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
+    <script src="scripts/controllers/index.js"></script>
+    <script src="scripts/controllers/reader.js"></script>
+    <script src="scripts/services/Store.js"></script>
+    <script src="scripts/directives/focus.js"></script>
+    <script src="scripts/directives/infiniteScroll.js"></script>
+    <script src="scripts/filters/subscriptionname.js"></script>
+    <script src="scripts/directives/ngTap.js"></script>
     <!-- endbuild -->
 
-        <!-- build:js scripts/modules.js -->
-        <script src="scripts/controllers/settings.js"></script>
-        <script src="scripts/controllers/index.js"></script>
-        <script src="scripts/controllers/reader.js"></script>
-        <script src="scripts/services/Store.js"></script>
-        <script src="scripts/directives/focus.js"></script>
-        <script src="scripts/directives/infiniteScroll.js"></script>
-        <script src="scripts/filters/subscriptionname.js"></script>
-        <script src="scripts/directives/ngTap.js"></script>
+        <!-- build:js scripts/plugins.js -->
+        <script src="bower_components/angular-translate/angular-translate.js"></script>
+        <script src="bower_components/angular-translate-interpolation-default/angular-translate-interpolation-default.js"></script>
+        <script src="bower_components/angular-gestures/gestures.min.js"></script>
         <!-- endbuild -->
 </body>
 </html>

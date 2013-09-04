@@ -2,15 +2,42 @@
 
 angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Store', '$rootScope', '$location', '$translate', function ($scope, $http, Store, $rootScope, $location, $translate) {
 
-    $scope.subscriptions = null;
-    $scope.unreadAll = 0;
-
     $scope.init = function() {
         var language = window.navigator.userLanguage || window.navigator.language;
         try {
-            $translate.uses('hu-HU');
+            $translate.uses(language);
         } catch (error) {
             $translate.uses("en-US");
+        }
+
+        if ($rootScope.settings == undefined) {
+            if (typeof(Storage) !== "undefined") {
+                if (localStorage.fireReaderSettings != undefined) {
+                    try {
+                        $rootScope.settings = JSON.parse(localStorage.fireReaderSettings);
+                    } catch (error) {
+                        utils.status.show($translate('ERROR_PARSING_SETTINGS'));
+                    }
+                } else {
+                    $rootScope.settings = {
+                        unreadSetting: true,
+                    };
+                }
+            } else {
+                utils.status.show($translate('ERROR_BROWSER_NOT_SUPPORTED'));
+            }
+        }
+
+        if ($rootScope.currentPage == undefined) {
+            $rootScope.currentPage = 'main';
+        }
+
+        if ($rootScope.currentPageParam == undefined) {
+            $rootScope.currentPageParam = '';
+        }
+
+        if ($rootScope.allUnreadCount == undefined) {
+            $rootScope.allUnreadCount = 0;
         }
 
         Store.getDb("Store.query", ["subscriptions"]);
@@ -30,15 +57,25 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
     };
 
     $rootScope.$on("subscriptions.queryresult", function(event, value) {
-        $scope.subscriptions = value;
+        $rootScope.subscriptions = value;
     });
 
     $rootScope.$on("subscriptions.noqueryresult", function(event, value) {
         $scope.getSubscriptions();
+        $scope.getUnreadCount();
     });
 
-    $scope.goToSubscription = function(subscription) {
-        $rootScope.goToSubscription = subscription.id;
+    $rootScope.goToPage = function(page, param, backParam) {
+        if (backParam) {
+            $rootScope.backParam = true;
+        } else {
+            if ($rootScope.backParam) {
+                $rootScope.backParam = false;
+                return;
+            }
+        }
+        $rootScope.currentPage = page;
+        $rootScope.currentPageParam = param;
     };
 
     $scope.getSubscriptions = function() {
@@ -50,9 +87,9 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
 
                 $http.jsonp(url).
                 success(function(data) {
-                    $scope.subscriptions = data.subscriptions;
+                    $rootScope.subscriptions = data.subscriptions;
                     Store.getDb("Store.delete", ["subscriptions"]);
-                    Store.getDb("Store.add", ["subscriptions", $scope.subscriptions]);
+                    Store.getDb("Store.add", ["subscriptions", $rootScope.subscriptions]);
                     localStorage.fireReaderSubscriptionsLastFetched = new Date();
                 }).
                 error(function(data, status, headers, config) {
@@ -67,20 +104,22 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
     };
 
     $scope.getUnreadCount = function() {
-        var authtoken = "";
+        if ($rootScope.subscriptions == undefined) {
+            $scope.getSubscriptions();
+        }
         if (typeof(Storage) !== undefined) {
-            authtoken = localStorage.fireReaderAuthtoken;
+            var authtoken = localStorage.fireReaderAuthtoken;
             if (authtoken != "" && authtoken != undefined) {
                 var url = "http://thesnapdragon.herokuapp.com/unread-count?callback=JSON_CALLBACK&authtoken=" + authtoken;
 
                 $http.jsonp(url).
                 success(function(data) {
                     if (data.unreadcounts != undefined) {
-                        $scope.unreadAll = data.max;
-                        $scope.subscriptions.forEach(function(subscription) {
+                        $rootScope.allUnreadCount = data.max;
+                        $rootScope.subscriptions.forEach(function(subscription) {
                             data.unreadcounts.forEach(function(entry) {
                                 if (subscription.id == entry.id) {
-                                    subscription.unreadcount = entry.count;
+                                    subscription.unreadCount = entry.count;
                                 }
                             });
                         });
@@ -95,10 +134,6 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
         } else {
             utils.status.show($translate('ERROR_BROWSER_NOT_SUPPORTED'));
         }
-    };
-
-    $scope.refresh = function() {
-        $scope.getUnreadCount();
     };
 
     $scope.whatIsThisIndex = function(control) {

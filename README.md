@@ -2,7 +2,12 @@
 
 ## Description
 
-FireReader is an RSS reader, powered by The Old Reader
+FireReader is a simple RSS reader, powered by The Old Reader
+
+*Features:*
+
+* Marking feeds read automatically as you scroll
+* Fully compatible with Google Reader API
 
 Actually the app can use any RSS reader, that provides the good old Google Reader API. At this time only tested with The Old Reader.
 
@@ -10,7 +15,8 @@ Available: *Coming soon*
 
 ## Usage
 
-*Coming soon*
+1. Login to The Old Reader at the Settings page
+2. Enjoy reading RSS feeds!
 
 **Currently supported RSS readers:**
 

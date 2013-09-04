@@ -110,6 +110,7 @@ section[role="region"] > header:first-child .icon.icon-fullview {
 #settings button[type="submit"] {
     margin-top: 10px !important;
     cursor: pointer !important;
+    font-size: small;
 }
 
 #settings .danger {

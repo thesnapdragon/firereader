@@ -2,10 +2,10 @@
     <section data-type="list">
         <header>{{ 'FEEDS' | translate }}</header>
         <ul>
-            <li class="feeditem" id="feed{{$index}}" ng-repeat="feed in feeds" ng-tap="readFeed($index)">
+            <li class="feeditem" id="feed{{$index}}" ng-repeat="feed in feeds" ng-tap="goToPage('reader', $index)">
                 <span>
-                    <button class="subscriptionname" ng-tap="goTo(feed.origin.streamId)" ng-show="isOnMainPage">{{feed.origin.title | subscriptionname : 15}}</button>
-                    <a ng-tap="readFeed($index)">
+                    <button class="subscriptionname" ng-tap="goToPage('main', feed.origin.streamId, true)" ng-show="currentPageParam == ''">{{feed.origin.title | subscriptionname : 15}}</button>
+                    <a ng-tap="goToPage('reader', $index)">
                         <span id="feedtext{{$index}}" ng-class="{ unreadFeed: feed.categories.indexOf('user/-/state/com.google/fresh') != -1 }">{{feed.title}}</span>
                     </a>
                 </span>
@@ -15,7 +15,7 @@
 </div>
 
 <span ng-switch="canLoadMoreFeed">
-    <button id="loadMoreButton" ng-switch-when="1" ng-click="loadMoreFeeds()">{{ 'LOAD_MORE_FEEDS' | translate }}</button>
+    <button id="loadMoreButton" ng-switch-when="1" ng-click="getFeeds(currentPageParam)">{{ 'LOAD_MORE_FEEDS' | translate }}</button>
     <button id="loadMoreButton" disabled="disabled" ng-switch-when="0">{{ 'LOADING_FEEDS' | translate }} <progress id="spinner"></progress></button>
     <button id="loadMoreButton" disabled="disabled" ng-switch-default>{{ 'NO_MORE_FEEDS' | translate }}</button>
 </span>

@@ -1,26 +1,33 @@
 'use strict';
 
-angular.module('firereaderApp').controller('SettingsCtrl', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
-
-    // model datas
-    $scope.email = '';
-    $scope.password = '';
-
-    // needed in view
-    $scope.authenticated = false;
+angular.module('firereaderApp').controller('SettingsCtrl', ['$scope', '$rootScope', '$http', '$translate', function ($scope, $rootScope, $http, $translate) {
 
     $scope.init = function() {
+        if ($rootScope.settings == undefined) {
+            $rootScope.settings = {
+                unreadSetting: true,
+            };
+        }
+
+        if ($rootScope.settings.authenticated == undefined) {
+            $rootScope.settings.authenticated = false;
+        }
+
         if (typeof(Storage) !== "undefined") {
             if (localStorage.fireReaderAuthtoken == undefined || localStorage.fireReaderAuthtoken == '') {
-                $scope.authenticated = false;
+                $rootScope.settings.authenticated = false;
             } else {
-                $scope.authenticated = true;
+                $rootScope.settings.authenticated = true;
             }
             if (localStorage.fireReaderSettings != undefined) {
-                $rootScope.settings = JSON.parse(localStorage.fireReaderSettings);
+                try {
+                    $rootScope.settings = JSON.parse(localStorage.fireReaderSettings);
+                } catch (error) {
+                    utils.status.show($translate('ERROR_PARSING_SETTINGS'));
+                }
             }
         } else {
-            utils.status.show("Browser not supported!");
+            utils.status.show($translate('ERROR_BROWSER_NOT_SUPPORTED'));
         }
     };
 
@@ -37,7 +44,7 @@ angular.module('firereaderApp').controller('SettingsCtrl', ['$scope', '$rootScop
             if (data.authtoken != undefined && data.authtoken != "") {
                 if (typeof(Storage) !== "undefined") {
                     localStorage.fireReaderAuthtoken = data.authtoken;
-                    $scope.authenticated = true;
+                    $rootScope.settings.authenticated = true;
                 } else {
                     utils.status.show("Browser not supported!");
                 }
@@ -52,11 +59,9 @@ angular.module('firereaderApp').controller('SettingsCtrl', ['$scope', '$rootScop
 
     $scope.logout = function() {
         if (typeof(Storage) !== "undefined") {
-            if (localStorage.fireReaderAuthtoken == undefined || localStorage.fireReaderAuthtoken == '') {
-                $scope.authenticated = null;
-            } else {
+            if (localStorage.fireReaderAuthtoken != undefined && localStorage.fireReaderAuthtoken != '') {
                 localStorage.fireReaderAuthtoken = '';
-                $scope.authenticated = null;
+                $rootScope.settings.authenticated = false;
             }
         } else {
             utils.status.show("Browser not supported!");
