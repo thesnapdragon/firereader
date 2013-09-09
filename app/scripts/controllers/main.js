@@ -138,7 +138,6 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
                         var markunreadparams = {"authtoken": authtoken, "ids": unreadList};
                         $rootScope.requestCounter++;
                         var url = "http://thesnapdragon.herokuapp.com/mark-unread?callback=JSON_CALLBACK&" + $.param(markunreadparams);
-
                         $http.jsonp(url).
                             success(function(data) {
                                 $rootScope.requestCounter--;

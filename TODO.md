@@ -1,3 +1,4 @@
-* Read full article
 * More view (list, full)
-* Mark unread
+* Mark unread button
+* Offline cache
+* Cancel request if it is not needed
