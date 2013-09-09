@@ -1,5 +1,5 @@
 {
-    "version": "1.0",
+    "version": "1.1",
     "name": "FireReaderTest",
     "launch_path": "/index.html",
     "description": "FireReader is a simple RSS reader, powered by The Old Reader",

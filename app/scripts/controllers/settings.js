@@ -37,10 +37,12 @@ angular.module('firereaderApp').controller('SettingsCtrl', ['$scope', '$rootScop
 
     $scope.authenticate = function() {
         var getauthtokenparams = {"email" : $scope.email, "password": $scope.password};
+        $rootScope.requestCounter++;
         var url = "http://thesnapdragon.herokuapp.com/authtoken?callback=JSON_CALLBACK&" + $.param(getauthtokenparams);
 
         $http.jsonp(url).
         success(function(data) {
+            $rootScope.requestCounter--;
             if (data.authtoken != undefined && data.authtoken != "") {
                 if (typeof(Storage) !== "undefined") {
                     localStorage.fireReaderAuthtoken = data.authtoken;
@@ -53,6 +55,7 @@ angular.module('firereaderApp').controller('SettingsCtrl', ['$scope', '$rootScop
             }
         }).
         error(function(data, status, headers, config) {
+            $rootScope.requestCounter--;
             utils.status.show("Email or password not correct!");
         });
     };

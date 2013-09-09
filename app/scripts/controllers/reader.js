@@ -9,10 +9,12 @@ angular.module('firereaderApp').controller('ReaderCtrl', ['$scope', '$http', '$r
                 authtoken = localStorage.fireReaderAuthtoken;
                 if (authtoken != "" && authtoken != undefined) {
                     var markunreadparams = {"authtoken": authtoken, "ids": $rootScope.feeds[$rootScope.currentPageParam].id.substr(32,24)};
+                    $rootScope.requestCounter++;
                     var url = "http://thesnapdragon.herokuapp.com/mark-unread?callback=JSON_CALLBACK&" + $.param(markunreadparams);
 
                     $http.jsonp(url).
                         success(function(data) {
+                            $rootScope.requestCounter--;
                             if (data != "OK") {
                                 utils.status.show($translate('ERROR_CONNECTING'));
                             } else {
@@ -20,6 +22,7 @@ angular.module('firereaderApp').controller('ReaderCtrl', ['$scope', '$http', '$r
                             }
                         }).
                         error(function(data, status, headers, config) {
+                            $rootScope.requestCounter--;
                             utils.status.show($translate('ERROR_CONNECTING'));
                         });
                 } else {

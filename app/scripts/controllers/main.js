@@ -75,26 +75,29 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
             if (authtoken != "" && authtoken != undefined) {
                 $scope.subscriptionid = ($location.search()).subscriptionid;
                 var getfeedparams = {"authtoken": authtoken, "subscriptionid": subscriptionId, "unread": $rootScope.settings.unreadSetting, "c": $rootScope.continuation, "n": 10};
+                $rootScope.requestCounter++;
                 var url = "http://thesnapdragon.herokuapp.com/feed?callback=JSON_CALLBACK&" + $.param(getfeedparams);
                 $http.jsonp(url).
                     success(function(data) {
-                            if (data.items != undefined) {
-                                $rootScope.feeds = $rootScope.feeds.concat(data.items);
-                            }
-                            $rootScope.feeds = $rootScope.feeds;
-                            $rootScope.continuation = data.continuation == undefined ? -1 : data.continuation;
-                            Store.getDb("Store.delete", ["feeds"]);
-                            Store.getDb("Store.add", ["feeds", $rootScope.feeds]);
-                            if (data.items != undefined) {
-                                $rootScope.feedsLoaded += data.items.length;
-                            }
-                            if ($rootScope.continuation != -1) {
-                                $rootScope.canLoadMoreFeed = 1;
-                            } else {
-                                $rootScope.canLoadMoreFeed = -1;
-                            }
+                        $rootScope.requestCounter--;
+                        if (data.items != undefined) {
+                            $rootScope.feeds = $rootScope.feeds.concat(data.items);
+                        }
+                        $rootScope.feeds = $rootScope.feeds;
+                        $rootScope.continuation = data.continuation == undefined ? -1 : data.continuation;
+                        Store.getDb("Store.delete", ["feeds"]);
+                        Store.getDb("Store.add", ["feeds", $rootScope.feeds]);
+                        if (data.items != undefined) {
+                            $rootScope.feedsLoaded += data.items.length;
+                        }
+                        if ($rootScope.continuation != -1) {
+                            $rootScope.canLoadMoreFeed = 1;
+                        } else {
+                            $rootScope.canLoadMoreFeed = -1;
+                        }
                     }).
                     error(function(data, status, headers, config) {
+                        $rootScope.requestCounter--;
                         utils.status.show($translate('ERROR_CONNECTING'));
                     });
             } else {
@@ -133,10 +136,12 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
                     authtoken = localStorage.fireReaderAuthtoken;
                     if (authtoken != "" && authtoken != undefined) {
                         var markunreadparams = {"authtoken": authtoken, "ids": unreadList};
+                        $rootScope.requestCounter++;
                         var url = "http://thesnapdragon.herokuapp.com/mark-unread?callback=JSON_CALLBACK&" + $.param(markunreadparams);
 
                         $http.jsonp(url).
                             success(function(data) {
+                                $rootScope.requestCounter--;
                                 if (data != "OK") {
                                     utils.status.show($translate('ERROR_CONNECTING'));
                                 } else {
@@ -151,6 +156,7 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
                                 }
                             }).
                             error(function(data, status, headers, config) {
+                                $rootScope.requestCounter--;
                                 utils.status.show($translate('ERROR_CONNECTING'));
                             });
                     } else {

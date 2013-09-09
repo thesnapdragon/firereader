@@ -40,6 +40,10 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
             $rootScope.allUnreadCount = 0;
         }
 
+        if ($rootScope.requestCounter == undefined) {
+            $rootScope.requestCounter = 0;
+        }
+
         Store.getDb("Store.query", ["subscriptions"]);
 
         // if older than 3 minutes get subscriptions
@@ -83,16 +87,19 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
         if (typeof(Storage) !== undefined) {
             authtoken = localStorage.fireReaderAuthtoken;
             if (authtoken != "" && authtoken != undefined) {
+                $rootScope.requestCounter++;
                 var url = "http://thesnapdragon.herokuapp.com/subscriptions?callback=JSON_CALLBACK&authtoken=" + authtoken;
 
                 $http.jsonp(url).
                 success(function(data) {
+                    $rootScope.requestCounter--;
                     $rootScope.subscriptions = data.subscriptions;
                     Store.getDb("Store.delete", ["subscriptions"]);
                     Store.getDb("Store.add", ["subscriptions", $rootScope.subscriptions]);
                     localStorage.fireReaderSubscriptionsLastFetched = new Date();
                 }).
                 error(function(data, status, headers, config) {
+                    $rootScope.requestCounter--;
                     utils.status.show($translate('ERROR_CONNECTING'));
                 });
             } else {
@@ -110,10 +117,12 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
         if (typeof(Storage) !== undefined) {
             var authtoken = localStorage.fireReaderAuthtoken;
             if (authtoken != "" && authtoken != undefined) {
+                $rootScope.requestCounter++;
                 var url = "http://thesnapdragon.herokuapp.com/unread-count?callback=JSON_CALLBACK&authtoken=" + authtoken;
 
                 $http.jsonp(url).
                 success(function(data) {
+                    $rootScope.requestCounter--;
                     if (data.unreadcounts != undefined) {
                         $rootScope.allUnreadCount = data.max;
                         $rootScope.subscriptions.forEach(function(subscription) {
@@ -128,6 +137,7 @@ angular.module('firereaderApp').controller('IndexCtrl', ['$scope', '$http', 'Sto
                     }
                 }).
                 error(function(data, status, headers, config) {
+                    $rootScope.requestCounter--;
                     utils.status.show($translate('ERROR_CONNECTING'));
                 });
             }

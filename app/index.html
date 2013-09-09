@@ -64,6 +64,7 @@
                     <a href="{{feeds[currentPageParam].canonical[0].href}}" target="_blank" ng-show="currentPage == 'reader'"><span class="icon icon-visit" hm-hold="whatIsThisMain('visit')">visit</span></a>
                 </menu>
                 <h1>FireReader</h1>
+                <progress ng-show="requestCounter > 0" max="100" value="0" class="pack-activity"></progress>
             </header>
             <article class="content scrollable header" ng-view=""  hm-swipe-left="pageLeft()" hm-swipe-right="pageRight()" infinite-scroll="scrollCallback($event, isEndEvent)">
             </article>
