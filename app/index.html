@@ -34,7 +34,7 @@
             <header>
                 <menu type="toolbar">
                     <a class="action-icon email-sync" ng-click="getUnreadCount()" hm-hold="whatIsThisIndex('refresh')"></a>
-                    <a href="#" class="action-icon settings" ng-tap="goToPage('settings')" hm-hold="whatIsThisIndex('settings')"></a>
+                    <a href="#" class="action-icon settings" ng-click="goToPage('settings')" hm-hold="whatIsThisIndex('settings')"></a>
                     <a href="#" ng-click="disableLoading()">OK</a>
                 </menu>
                 <h1>{{ 'MENU' | translate }}</h1>
@@ -53,7 +53,7 @@
                 <a href="#drawer" ng-click="disableLoading()" ng-hide="currentPage == 'reader'"><span class="icon icon-menu">show sidebar</span></a>
                 <a ng-show="currentPage == 'reader'"><span class="icon icon-back" ng-click="goToPage('previous', '')">back</span></a>
                 <menu type="toolbar">
-                    <span ng-hide="currentPage == 'settings'">
+                    <span ng-hide="currentPage == 'settings' || currentPage == 'reader'">
                         <span ng-hide="settings.unreadSetting">
                             <a><span class="icon icon-read" ng-click="settings.unreadSetting = !settings.unreadSetting" hm-hold="whatIsThisMain('unread')">read</span></a>
                         </span>
@@ -61,6 +61,7 @@
                             <a><span class="icon icon-unread" ng-click="settings.unreadSetting = !settings.unreadSetting" hm-hold="whatIsThisMain('read')">unread</span></a>
                         </span>
                     </span>
+                    <a href="{{feeds[currentPageParam].canonical[0].href}}" target="_blank" ng-show="currentPage == 'reader'"><span class="icon icon-visit" hm-hold="whatIsThisMain('visit')">visit</span></a>
                 </menu>
                 <h1>FireReader</h1>
             </header>

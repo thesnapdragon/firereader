@@ -44,7 +44,8 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
         'WHATIS_SETTINGS': 'Login to The Old Reader and other settings',
         'WHATIS_REFRESH': 'Refresh unread feeds count',
         'WHATIS_UNREAD': 'Show only unread feeds',
-        'WHATIS_READ': 'Show all feeds'
+        'WHATIS_READ': 'Show all feeds',
+        'WHATIS_VISIT': 'Read original version'
     });
 
     var huTranslation = {
@@ -70,7 +71,8 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
         'WHATIS_SETTINGS': 'Belépés és egyéb beállítások',
         'WHATIS_REFRESH': 'Olvasatlan feedek számának frissítése',
         'WHATIS_UNREAD': 'Csak olvasatlan feedek mutatása',
-        'WHATIS_READ': 'Minden feed mutatása'
+        'WHATIS_READ': 'Minden feed mutatása',
+        'WHATIS_VISIT': 'Eredeti változat elolvasása'
     };
     $translateProvider.translations('hu', huTranslation);
     $translateProvider.translations('hu-HU', huTranslation);

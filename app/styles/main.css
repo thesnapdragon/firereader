@@ -27,12 +27,8 @@ section[role="region"] > header:first-child .icon.icon-read {
   background-image: url(../images/read.png);
 }
 
-section[role="region"] > header:first-child .icon.icon-listview {
-  background-image: url(../images/listview.png);
-}
-
-section[role="region"] > header:first-child .icon.icon-fullview {
-  background-image: url(../images/fullview.png);
+section[role="region"] > header:first-child .icon.icon-visit {
+  background-image: url(../images/visit.png);
 }
 
 /* Main */
