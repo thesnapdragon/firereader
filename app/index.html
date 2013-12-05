@@ -11,10 +11,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
 
         <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/bootstrap.css">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" type="text/css" href="styles/shared/transitions.css">
         <link rel="stylesheet" type="text/css" href="styles/shared/util.css">
         <link rel="stylesheet" type="text/css" href="styles/shared/cross_browser.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/brick-slidebox/brick-0.9.2.byob.min.css">
         <!-- endbuild -->
         <link rel="stylesheet" type="text/css" href="styles/shared/icons/styles/action_icons.css">
         <link rel="stylesheet" type="text/css" href="styles/shared/style/status.css">
@@ -45,6 +47,11 @@
                     <li><a href="#" ng-tap="goToPage('main', '')">{{ 'ALL_ITEMS' | translate }} ({{allUnreadCount}})</a></li>
                     <li ng-repeat="subscription in subscriptions"><a href="#" ng-click="goToPage('main', subscription.id)">{{subscription.title}} ({{subscription.unreadCount}})</a></li>
                 </ul>
+                <h2>{{ 'HELP' | translate }}</h2>
+                <ul>
+                    <li><a href="#" ng-tap="goToPage('about', '')">{{ 'ABOUT' | translate }}</a></li>
+                    <li class="drawerFix"></li>
+                </ul>
             </nav>
         </section>
 
@@ -53,7 +60,7 @@
                 <a href="#drawer" ng-click="disableLoading()" ng-hide="currentPage == 'reader'"><span class="icon icon-menu">show sidebar</span></a>
                 <a ng-show="currentPage == 'reader'"><span class="icon icon-back" ng-click="goToPage('previous', '')">back</span></a>
                 <menu type="toolbar">
-                    <span ng-hide="currentPage == 'settings' || currentPage == 'reader'">
+                    <span ng-hide="currentPage == 'settings' || currentPage == 'reader' || currentPage == 'about'">
                         <span ng-hide="settings.unreadSetting">
                             <a><span class="icon icon-read" ng-click="settings.unreadSetting = !settings.unreadSetting" hm-hold="whatIsThisMain('unread')">read</span></a>
                         </span>
@@ -98,12 +105,14 @@
     <script src="scripts/directives/infiniteScroll.js"></script>
     <script src="scripts/filters/subscriptionname.js"></script>
     <script src="scripts/directives/ngTap.js"></script>
+    <script src="scripts/directives/prepareFeed.js"></script>
     <!-- endbuild -->
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/angular-translate/angular-translate.js"></script>
         <script src="bower_components/angular-translate-interpolation-default/angular-translate-interpolation-default.js"></script>
         <script src="bower_components/angular-gestures/gestures.min.js"></script>
+        <script src="bower_components/brick-slidebox/brick-0.9.2.byob.min.js"></script>
         <!-- endbuild -->
 </body>
 </html>

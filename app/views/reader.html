@@ -1,1 +1,5 @@
-<div ng-bind-html-unsafe="feeds[currentPageParam].summary.content" ng-init="markAsRead()"></div>
+<x-slidebox id="slidebox">
+    <x-slides>
+        <x-slide ng-repeat="feed in feeds" ng-bind-html-unsafe="feed.summary.content" ng-init="markAsRead()" prepare-feed></x-slide>
+    </x-slides>
+</x-slidebox>
