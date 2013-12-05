@@ -79,14 +79,9 @@ section[role="region"] > header:first-child .icon.icon-visit {
 
 /* Settings */
 
-#logo {
+.theoldreaderlogo {
     width: 130%;
-    background-size: 60% 20%;
-    background-repeat: no-repeat;
-    background-image: url(../images/logo_horizontal_large.png);
-    padding-top: 20rem;
-    margin-top: 1rem;
-    margin-bottom: -15rem;
+    padding-top: 1rem;
 }
 
 #settings {
@@ -118,6 +113,20 @@ section[role="region"] > header:first-child .icon.icon-visit {
     margin: 1rem;
 }
 
+/* About */
+
+.logo {
+    padding-top: 1rem;
+}
+
+.textBlock {
+    text-align: justify;
+}
+
+.textBlock p, .textBlock ul, .textBlock li {
+    font-size: 1.5rem;
+}
+
 /* Fixes */
 
 #index h1 {
@@ -143,4 +152,8 @@ button {
 section[role="region"] {
     margin-bottom: 1.5rem;
     position: relative;
+}
+
+.drawerFix {
+    padding-top: 5rem;
 }

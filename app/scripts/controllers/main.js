@@ -29,10 +29,10 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
     $scope.router = function() {
         switch($rootScope.currentPage) {
             case 'settings':
-                $location.path('/settings').search("");
+                $location.path('/settings').search('');
                 break;
             case 'main':
-                $location.path('/').search("");
+                $location.path('/').search('');
                 $rootScope.continuation = null;
                 $rootScope.feeds = [];
                 $rootScope.feedsLoaded = 0;
@@ -40,10 +40,13 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
                 $rootScope.getFeeds($rootScope.currentPageParam);
                 break;
             case 'reader':
-                $location.path('/reader').search("");
+                $location.path('/reader').search('');
                 break;
             case 'previous':
-                $location.path('/').search("");
+                $location.path('/').search('');
+                break;
+            case 'about':
+                $location.path('/about').search('');
                 break;
         }
     };
@@ -171,8 +174,8 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
     $scope.pageLeft = function() {
         if ($rootScope.currentPage == 'reader') {
             if ($rootScope.currentPageParam < $rootScope.feedsLoaded - 1) {
+                $("#slidebox")[0].slideNext();
                 $rootScope.currentPageParam++;
-                $rootScope.goToPage('reader', $rootScope.currentPageParam);
             }
         }
     };
@@ -180,8 +183,8 @@ angular.module('firereaderApp').controller('MainCtrl', ['$scope', '$location', '
     $scope.pageRight = function() {
         if ($rootScope.currentPage == 'reader') {
             if ($rootScope.currentPageParam > 0) {
+                $("#slidebox")[0].slidePrevious();
                 $rootScope.currentPageParam--;
-                $rootScope.goToPage('reader', $rootScope.currentPageParam);
             }
         }
     };

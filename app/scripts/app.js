@@ -15,6 +15,9 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
             templateUrl: 'views/reader.html',
             controller: 'ReaderCtrl'
           })
+          .when('/about', {
+            templateUrl: 'views/about.html'
+          })
           .otherwise({
             redirectTo: '/'
           });
@@ -24,6 +27,8 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
     $translateProvider.translations('en-US', {
         'MENU': 'Menu',
         'SUBSCRIPTIONS': 'Subscriptions',
+        'HELP': 'Help',
+        'ABOUT': 'About',
         'FEEDS': 'Feeds',
         'ALL_ITEMS': 'All items',
         'AUTHENTICATION': 'Authentication',
@@ -32,11 +37,18 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
         'LOGIN': 'Login',
         'LOGOUT': 'Logout',
         'SETTINGS': 'Settings',
+        'REGISTER_TEXT': 'If you don\'t have account at The Old Reader you can register now!',
+        'REGISTER_BUTTON': 'Register',
         'LOAD_MORE_FEEDS': 'Load more feeds',
         'LOADING_FEEDS': 'Loading',
         'NO_MORE_FEEDS': 'No more feeds to load',
         'LOGIN_SUCCESS': 'You are authenticated to The Old Reader.',
         'SHOW_ONLY_UNREAD': 'Show only unread feeds as default',
+        'VERSION': 'Version',
+        'INFORMATION': 'Information',
+        'CREATEDBY': 'Created by',
+        'CHANGELOG': 'Changelog',
+        'LICENSE': 'License',
         'ERROR_NOT_LOGGED_IN': 'Please login into The Old Reader!',
         'ERROR_BROWSER_NOT_SUPPORTED': 'Browser not supported!',
         'ERROR_CONNECTING': 'Error while connecting to The Old Reader!',
@@ -51,6 +63,8 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
     var huTranslation = {
         'MENU': 'Menü',
         'SUBSCRIPTIONS': 'Feliratkozások',
+        'HELP': 'Súgó',
+        'ABOUT': 'Információ',
         'FEEDS': 'Feedek',
         'ALL_ITEMS': 'Összes',
         'AUTHENTICATION': 'Autentikáció',
@@ -58,12 +72,19 @@ angular.module('firereaderApp', ['pascalprecht.translate', 'angular-gestures'])
         'PASSWORD': 'Jelszó',
         'LOGIN': 'Belépés',
         'LOGOUT': 'Kilépés',
+        'REGISTER_TEXT': 'Ha még nincs The Old Reader felhasználód regisztrálj most!',
+        'REGISTER_BUTTON': 'Regisztrálás',
         'SETTINGS': 'Beállítások',
         'LOAD_MORE_FEEDS': 'Több feed betöltése',
         'LOADING_FEEDS': 'Betöltés',
         'NO_MORE_FEEDS': 'Nincs több olvasatlan feed',
         'LOGIN_SUCCESS': 'Sikeresen bejelentkeztél ide: The Old Reader',
         'SHOW_ONLY_UNREAD': 'Csak olvasatlan feedek mutatása alapértelmezetten',
+        'VERSION': 'Verzió',
+        'INFORMATION': 'Információ',
+        'CREATEDBY': 'Készítette',
+        'CHANGELOG': 'Changelog',
+        'LICENSE': 'Licensz',
         'ERROR_NOT_LOGGED_IN': 'Nem vagy belépve a The Old Reader-be!',
         'ERROR_BROWSER_NOT_SUPPORTED': 'Böngésző nem támogatott!',
         'ERROR_CONNECTING': 'Hiba a csatlakozás közben!',

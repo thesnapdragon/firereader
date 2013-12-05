@@ -6,7 +6,7 @@
 grunt build
 
 # delete unused javascripts
-rm -rfv ../dist/bower_components/angular-* ../dist/bower_components/es5-shim/ ../dist/bower_components/json3/
+rm -rfv ../dist/bower_components/angular-* ../dist/bower_components/es5-shim/ ../dist/bower_components/json3/ ../dist/bower_components/brick-slidebox/
 rm -fv ../dist/bower_components/angular/angular.js ../dist/bower_components/angular/bower.json
 rm -fv ../dist/bower_components/jquery/bower.json ../dist/bower_components/jquery/compo* ../dist/bower_components/jquery/jquery.js ../dist/bower_components/jquery/jquery-migrate.* ../dist/bower_components/jquery/jquery.min.map ../dist/bower_components/jquery/package.json ../dist/bower_components/jquery/README.md ../dist/bower_components/jquery/.gitignore
 
